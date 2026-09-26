@@ -12,19 +12,14 @@ An MCP server that lets AI agents (Claude Desktop, Cursor, any MCP client) call 
 
 ## Setup
 
-```bash
-git clone https://github.com/fatihaura/ulvane-mcp
-cd ulvane-mcp && npm install
-```
-
-Claude Desktop config (`claude_desktop_config.json`):
+No install step — add this to your MCP client config (Claude Desktop: `claude_desktop_config.json`) and it runs via `npx`:
 
 ```json
 {
   "mcpServers": {
     "ulvane": {
-      "command": "node",
-      "args": ["/absolute/path/to/ulvane-mcp/index.mjs"],
+      "command": "npx",
+      "args": ["-y", "ulvane-mcp"],
       "env": { "EVM_PRIVATE_KEY": "0x..." }
     }
   }
@@ -32,6 +27,8 @@ Claude Desktop config (`claude_desktop_config.json`):
 ```
 
 Restart Claude Desktop fully, then use it from a regular chat.
+
+To run from source instead: `git clone https://github.com/fatihaura/ulvane-mcp && cd ulvane-mcp && npm install`, then use `"command": "node"` with `"args": ["/absolute/path/to/ulvane-mcp/index.mjs"]`.
 
 **Use a dedicated wallet** holding only a few dollars of USDC on Base. The key is read locally and only used to sign x402 payment authorizations; it is never sent to Ulvane. Without `EVM_PRIVATE_KEY`, only the free `base_leaderboard` tool works.
 
