@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "MCP server exposing Ulvane's x402-priced Base onchain intelligence (token risk, wallet PnL, top traders, wallet risk) as tools for AI agents.",
   "type": "module",
-  "bin": { "ulvane-mcp": "./index.mjs" },
+  "bin": { "ulvane-mcp": "index.mjs" },
   "main": "./index.mjs",
   "files": ["index.mjs", "README.md", "LICENSE"],
   "keywords": ["mcp", "model-context-protocol", "x402", "base", "onchain", "ai-agents", "defi"],
