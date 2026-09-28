@@ -8,6 +8,7 @@ An MCP server that lets AI agents (Claude Desktop, Cursor, any MCP client) call 
 | `wallet_pnl` | Realized/unrealized PnL from swap history | $0.02 |
 | `wallet_risk` | Has this wallet traded flagged impersonator tokens? | $0.02 |
 | `token_top_traders` | Biggest recent traders of a token, with PnL | $0.03 |
+| `pre_trade_gate` | Token risk + top traders + optional wallet risk in one call → clear/caution/avoid | $0.05 |
 | `base_leaderboard` | Top Aerodrome wallets by realized PnL (1h/8h/12h/1d) | free |
 
 ## Setup

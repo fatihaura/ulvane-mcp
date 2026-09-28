@@ -60,7 +60,7 @@ async function callPaid(path, priceUsd) {
 const address = (what) =>
   z.string().refine((v) => isAddress(v), { message: `Must be a 0x-prefixed 40-character hex ${what} address` });
 
-const server = new McpServer({ name: "ulvane", version: "0.1.0" });
+const server = new McpServer({ name: "ulvane", version: "0.2.0" });
 
 server.registerTool(
   "token_risk",
@@ -100,6 +100,16 @@ server.registerTool(
     inputSchema: { address: address("token") },
   },
   ({ address }) => callPaid(`/api/token/${address}/top-traders`, 0.03),
+);
+
+server.registerTool(
+  "pre_trade_gate",
+  {
+    description:
+      "Combined pre-trade check: token risk + top 3 traders by volume, plus an optional wallet risk check, in one call. Returns a clear/caution/avoid verdict. Cheaper than calling token_risk + token_top_traders + wallet_risk separately ($0.06). Costs $0.05 USDC via x402.",
+    inputSchema: { address: address("token"), wallet: address("wallet").optional() },
+  },
+  ({ address, wallet }) => callPaid(`/api/token/${address}/pre-trade-gate${wallet ? `?wallet=${wallet}` : ""}`, 0.05),
 );
 
 server.registerTool(
