@@ -76,16 +76,26 @@ const UNTRUSTED_NOTICE =
 const address = (what) =>
   z.string().refine((v) => isAddress(v), { message: `Must be a 0x-prefixed 40-character hex ${what} address` });
 
-const server = new McpServer({ name: "ulvane", version: "0.3.0" });
+const server = new McpServer({ name: "ulvane", version: "0.4.0" });
 
 server.registerTool(
   "token_risk",
   {
     description:
-      "Check whether a Base token is a hand-verified real token, a symbol impersonator (scam clone), or simply unvetted. Call before buying an unfamiliar token. Costs $0.01 USDC via x402.",
+      "Check whether a Base token is a hand-verified real token, a symbol impersonator (scam clone), or simply unvetted, plus neutral facts read from the contract (ownership, upgradeable proxy, mint/pause/blacklist functions) and from published token lists (including lookalike symbols). Call before buying an unfamiliar token. Costs $0.01 USDC via x402.",
     inputSchema: { address: address("token") },
   },
   ({ address }) => callPaid(`/api/token/${address}/risk`, 0.01),
+);
+
+server.registerTool(
+  "tokens_risk_batch",
+  {
+    description:
+      "Token risk for up to 10 Base tokens in one call (flat price), with the same checks and signals as token_risk for each. One token that can't be read fails on its own row without failing the call. Costs $0.05 USDC via x402.",
+    inputSchema: { addresses: z.array(address("token")).min(1).max(10) },
+  },
+  ({ addresses }) => callPaid(`/api/tokens/risk?addresses=${[...new Set(addresses)].join(",")}`, 0.05),
 );
 
 server.registerTool(

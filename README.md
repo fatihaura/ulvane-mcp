@@ -5,6 +5,7 @@ An MCP server that lets AI agents (Claude Desktop, Cursor, any MCP client) call 
 | Tool | What it does | Price |
 |---|---|---|
 | `token_risk` | Verified / impersonator / unvetted check for a token | $0.01 |
+| `tokens_risk_batch` | Token risk for up to 10 tokens in one call | $0.05 |
 | `wallet_pnl` | Realized/unrealized PnL from swap history | $0.02 |
 | `wallet_risk` | Has this wallet traded flagged impersonator tokens? | $0.02 |
 | `token_top_traders` | Biggest recent traders of a token, with PnL | $0.03 |
